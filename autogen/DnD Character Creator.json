@@ -1,0 +1,144 @@
+{
+    "name": "DnD Character Creator",
+    "description": "Default Group  Workflow",
+    "sender": {
+        "type": "userproxy",
+        "config": {
+            "name": "userproxy",
+            "llm_config": false,
+            "human_input_mode": "NEVER",
+            "max_consecutive_auto_reply": 5,
+            "system_message": "You are a helpful assistant.",
+            "is_termination_msg": null,
+            "code_execution_config": {
+                "work_dir": null,
+                "use_docker": false
+            },
+            "default_auto_reply": "TERMINATE"
+        },
+        "id": "79a7d709-4114-4be9-9169-630190ba0ebd",
+        "timestamp": "2024-02-18T19:02:51.050918",
+        "user_id": "default",
+        "skills": null,
+        "description": null
+    },
+    "receiver": {
+        "type": "groupchat",
+        "config": {
+            "name": "groupchat_assistant",
+            "llm_config": {
+                "config_list": [
+                    {
+                        "id": "4aedf9d7-b092-4ecf-8ade-eedc98569381",
+                        "user_id": "guestuser@gmail.com",
+                        "timestamp": "2024-02-18T18:37:27.779541",
+                        "model": "gpt-4-turbo-preview",
+                        "api_key": "********",
+                        "base_url": null,
+                        "api_type": null,
+                        "api_version": null,
+                        "description": "GPT-4 Turbo"
+                    }
+                ],
+                "temperature": 0.5,
+                "cache_seed": null,
+                "timeout": null
+            },
+            "human_input_mode": "NEVER",
+            "max_consecutive_auto_reply": 8,
+            "system_message": "You are a helpful assistant skilled at coordinating a group of other assistants to solve the task of creating a DnD 5e character. You will end the conversation when we have a character backstory and class. You will start by asking the user to provide some input to their DnD backstory focusing on what kind of playstyle and character traits they want to roleplay with. You will hand the information to the background_writer agent to generate a suggested background or prompt the user for more information. When the background_writer is done they will say BACKGROUND COMPLETE and will provide the completed background. You will then pass this background to the class_writer agent who will suggest some classes. Let them work interactively with the user to select the class. When complete the class_writer will respond with CLASS SELECTED, and you will summarize the final character for the user. ",
+            "is_termination_msg": null,
+            "code_execution_config": false,
+            "default_auto_reply": ""
+        },
+        "groupchat_config": {
+            "agents": [
+                {
+                    "type": "assistant",
+                    "config": {
+                        "name": "background_writer",
+                        "llm_config": {
+                            "config_list": [
+                                {
+                                    "id": "4aedf9d7-b092-4ecf-8ade-eedc98569381",
+                                    "user_id": "guestuser@gmail.com",
+                                    "timestamp": "2024-02-18T18:37:27.779541",
+                                    "model": "gpt-4-turbo-preview",
+                                    "api_key": "********",
+                                    "base_url": null,
+                                    "api_type": null,
+                                    "api_version": null,
+                                    "description": "GPT-4 Turbo"
+                                }
+                            ],
+                            "temperature": 0.7,
+                            "cache_seed": null,
+                            "timeout": null
+                        },
+                        "human_input_mode": "NEVER",
+                        "max_consecutive_auto_reply": 8,
+                        "system_message": "You are a DnD 5e character creation assistant who will interactively work with the user to build a DnD character background based on their preferences.  You will only build the background independent of race, class and other parameters which are handled by other agents. \nThe user will be instructed to start with a description of what kind of character they want. \nMake sure to ask them follow up questions if they dont provide much information on the character. \nYou will iterate on the backstory with the user and ask the user to say when they are satisfied with the backstory. When this happens you will say BACKSTORY COMPLETE and provide the full completed backstory for the next agent to take over. ",
+                        "is_termination_msg": null,
+                        "code_execution_config": false,
+                        "default_auto_reply": ""
+                    },
+                    "id": "500cad25-9222-4171-8455-143341b9039d",
+                    "timestamp": "2024-02-18T18:50:43.046341",
+                    "user_id": "guestuser@gmail.com",
+                    "skills": [],
+                    "description": "Agent to write character background"
+                },
+                {
+                    "type": "assistant",
+                    "config": {
+                        "name": "class_writer",
+                        "llm_config": {
+                            "config_list": [
+                                {
+                                    "id": "4aedf9d7-b092-4ecf-8ade-eedc98569381",
+                                    "user_id": "guestuser@gmail.com",
+                                    "timestamp": "2024-02-18T18:37:27.779541",
+                                    "model": "gpt-4-turbo-preview",
+                                    "api_key": "********",
+                                    "base_url": null,
+                                    "api_type": null,
+                                    "api_version": null,
+                                    "description": "GPT-4 Turbo"
+                                }
+                            ],
+                            "temperature": 0.7,
+                            "cache_seed": null,
+                            "timeout": null
+                        },
+                        "human_input_mode": "NEVER",
+                        "max_consecutive_auto_reply": 8,
+                        "system_message": "You are a DnD 5e race selection assistant, you will receive a background from the background agent and you will use this to suggest 3 potential classes to the user. \nYou will provide detailed rationale on why the 3 suggested classes are a good fit for the given backstory and you will only select from classes available in the player handbook. \nIf the user suggests a class outside of your list which you think is not a good choice, provide feedback to the user on why, but let them make the final call. \nWhen the user has provided their confirmation on their class selection, you will simply respond with CLASS SELECTED. ",
+                        "is_termination_msg": null,
+                        "code_execution_config": false,
+                        "default_auto_reply": ""
+                    },
+                    "id": "5d3af0be-ec69-4c51-b63b-b08d01ff9b41",
+                    "timestamp": "2024-02-18T18:52:49.632354",
+                    "user_id": "guestuser@gmail.com",
+                    "skills": [],
+                    "description": "Helps the user pick a class"
+                }
+            ],
+            "admin_name": "groupchat_assistant",
+            "messages": [],
+            "max_round": 10,
+            "speaker_selection_method": "auto",
+            "allow_repeat_speaker": false
+        },
+        "id": "3a87aed4-9c97-49f5-a229-0a74d2dc5e7f",
+        "timestamp": "2024-02-18T19:02:51.051914",
+        "user_id": "default",
+        "description": "Default Group  Workflow",
+        "skills": null
+    },
+    "type": "groupchat",
+    "id": "965d2ed2-5c34-497f-ad78-b262e6a521ba",
+    "user_id": "default",
+    "timestamp": "2024-02-18T19:02:51.051914",
+    "summary_method": "llm"
+}
